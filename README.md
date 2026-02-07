@@ -21,17 +21,21 @@ Key idea:
 
 ## Contents
 
+- [Quick start](#quick-start)
 - [Architecture](#architecture)
 - [JWT issuance flow](#jwt-issuance-flow)
+- [Pinned vs Latest](#pinned-vs-latest)
 - [Repository layout](#repository-layout)
 - [Key files (details)](#key-files-details)
-- [Quick start](#quick-start)
+- [Super installer (super-install.sh) – step by step](#super-installer-super-installsh-step-by-step)
 - [Configuration](#configuration)
-- [Certificates (custom / Let’s Encrypt)](#certificates-custom--lets-encrypt)
+- [Certificates (custom / Let’s Encrypt)](#certificates-custom-lets-encrypt)
 - [systemd units](#systemd-units)
+- [Client apps](#client-apps)
 - [Useful commands](#useful-commands)
 - [Security](#security)
 - [Troubleshooting](#troubleshooting)
+- [License](#license)
 
 ---
 
