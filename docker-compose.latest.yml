@@ -1,0 +1,123 @@
+services:
+  ziti-controller:
+    image: ${ZITI_IMAGE}:${ZITI_VERSION}
+    container_name: ${ZITI_CONTROLLER_CONTAINER}
+    restart: unless-stopped
+    healthcheck:
+      test: curl -m 1 -s -k https://${ZITI_CTRL_EDGE_ADVERTISED_ADDRESS}:${ZITI_CTRL_EDGE_ADVERTISED_PORT}/edge/client/v1/version
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+    env_file:
+      - .env
+    ports:
+      - ${ZITI_INTERFACE}:${ZITI_CTRL_EDGE_ADVERTISED_PORT}:${ZITI_CTRL_EDGE_ADVERTISED_PORT}
+      - ${ZITI_INTERFACE}:${ZITI_CTRL_ADVERTISED_PORT}:${ZITI_CTRL_ADVERTISED_PORT}
+    environment:
+      - ZITI_CTRL_NAME=${ZITI_CTRL_NAME}
+      - ZITI_CTRL_EDGE_ADVERTISED_ADDRESS=${ZITI_CTRL_EDGE_ADVERTISED_ADDRESS}
+      - ZITI_CTRL_EDGE_ADVERTISED_PORT=${ZITI_CTRL_EDGE_ADVERTISED_PORT}
+      - ZITI_CTRL_EDGE_IP_OVERRIDE=${ZITI_CTRL_EDGE_IP_OVERRIDE}
+      - ZITI_CTRL_ADVERTISED_PORT=${ZITI_CTRL_ADVERTISED_PORT}
+      - ZITI_EDGE_IDENTITY_ENROLLMENT_DURATION=${ZITI_EDGE_IDENTITY_ENROLLMENT_DURATION}
+      - ZITI_ROUTER_ENROLLMENT_DURATION=${ZITI_ROUTER_ENROLLMENT_DURATION}
+      - ZITI_USER=${ZITI_USER}
+      - ZITI_PWD=${ZITI_PWD}
+    networks:
+      ziti-network:
+        aliases:
+          - ${ZITI_CTRL_EDGE_ADVERTISED_ADDRESS}
+    volumes:
+      - ziti-fs:/persistent
+      - ./certs:/certs:ro
+      - ./scripts:/scripts:ro
+    entrypoint:
+      - "/var/openziti/scripts/run-controller.sh"
+
+  ziti-controller-init:
+    image: ${ZITI_IMAGE}:${ZITI_VERSION}
+    container_name: ziti-controller-init
+    depends_on:
+      ziti-controller:
+        condition: service_healthy
+    environment:
+      - ZITI_CTRL_EDGE_ADVERTISED_ADDRESS=${ZITI_CTRL_EDGE_ADVERTISED_ADDRESS}
+      - ZITI_CTRL_EDGE_ADVERTISED_PORT=${ZITI_CTRL_EDGE_ADVERTISED_PORT}
+      - ZITI_USER=${ZITI_USER}
+      - ZITI_PWD=${ZITI_PWD}
+    env_file:
+      - .env
+    networks:
+      - ziti-network
+    volumes:
+      - ziti-fs:/persistent
+      - ./scripts:/scripts:ro
+    entrypoint:
+      - "/var/openziti/scripts/run-with-ziti-cli.sh"
+    command:
+      - "/scripts/init-ziti.sh"
+
+  ziti-edge-router:
+    image: ${ZITI_IMAGE}:${ZITI_VERSION}
+    container_name: ${ZITI_ROUTER_CONTAINER}
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      ziti-controller:
+        condition: service_healthy
+    ports:
+      - ${ZITI_INTERFACE}:${ZITI_ROUTER_PORT}:${ZITI_ROUTER_PORT}
+    environment:
+      - ZITI_CTRL_ADVERTISED_ADDRESS=${ZITI_CTRL_EDGE_ADVERTISED_ADDRESS}
+      - ZITI_CTRL_ADVERTISED_PORT=${ZITI_CTRL_ADVERTISED_PORT}
+      - ZITI_CTRL_EDGE_ADVERTISED_ADDRESS=${ZITI_CTRL_EDGE_ADVERTISED_ADDRESS}
+      - ZITI_CTRL_EDGE_ADVERTISED_PORT=${ZITI_CTRL_EDGE_ADVERTISED_PORT}
+      - ZITI_ROUTER_NAME=${ZITI_ROUTER_NAME}
+      - ZITI_ROUTER_ADVERTISED_ADDRESS=${ZITI_ROUTER_ADVERTISED_ADDRESS}
+      - ZITI_ROUTER_PORT=${ZITI_ROUTER_PORT}
+      - ZITI_ROUTER_ROLES=${ZITI_ROUTER_ROLES}
+    networks:
+      - ziti-network
+    volumes:
+      - ziti-fs:/persistent
+      - ./certs:/certs:ro
+    entrypoint: /bin/bash
+    command: "/var/openziti/scripts/run-router.sh edge"
+    cap_add:
+      - NET_ADMIN
+
+  ziti-console:
+    image: openziti/zac:latest
+    container_name: ziti-console
+    profiles:
+      - zac
+    restart: unless-stopped
+    working_dir: /usr/src/app
+    depends_on:
+      ziti-controller:
+        condition: service_healthy
+    ports:
+      - ${ZITI_INTERFACE}:8443:8443
+    environment:
+      - ZAC_SERVER_CERT_CHAIN=/certs/fullchain.cer
+      - ZAC_SERVER_KEY=/certs/cert.key
+      - ZITI_CTRL_EDGE_ADVERTISED_ADDRESS=${ZITI_CTRL_EDGE_ADVERTISED_ADDRESS}
+      - ZITI_CTRL_EDGE_ADVERTISED_PORT=${ZITI_CTRL_EDGE_ADVERTISED_PORT}
+      - ZITI_CTRL_NAME=${ZITI_CTRL_NAME}
+      - ZAC_CONTROLLER_URLS=https://${ZITI_CTRL_EDGE_ADVERTISED_ADDRESS}:${ZITI_CTRL_EDGE_ADVERTISED_PORT}
+      - PORTTLS=8443
+    networks:
+      - ziti-network
+    volumes:
+      - ziti-fs:/persistent
+      - ./certs:/certs:ro
+
+networks:
+  ziti-network:
+    driver: bridge
+
+volumes:
+  ziti-fs:
+    driver: local

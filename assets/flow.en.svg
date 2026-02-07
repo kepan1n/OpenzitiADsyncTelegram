@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540">
+  <defs>
+    <style>
+      .title{font:700 28px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#0f172a}
+      .box{fill:#ffffff; stroke:#94a3b8; stroke-width:2; rx:16; ry:16}
+      .step{font:700 16px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#0f172a}
+      .txt{font:500 13px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#334155}
+      .arrow{stroke:#0f172a; stroke-width:2.5; fill:none; marker-end:url(#m)}
+      .note{font:500 13px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#475569}
+    </style>
+    <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="540" fill="#f8fafc"/>
+  <text x="60" y="70" class="title">JWT issuance flow: Telegram → AD/LDAP (enabled + nested group) → Ziti → Email</text>
+
+  <rect x="60" y="130" width="240" height="110" class="box"/>
+  <text x="85" y="165" class="step">1) User</text>
+  <text x="85" y="190" class="txt">Sends username in Telegram</text>
+
+  <rect x="330" y="130" width="240" height="110" class="box"/>
+  <text x="355" y="165" class="step">2) Telegram Bot</text>
+  <text x="355" y="190" class="txt">Allowed chat_id + anti-abuse</text>
+
+  <rect x="600" y="130" width="240" height="110" class="box"/>
+  <text x="625" y="165" class="step">3) AD/LDAP</text>
+  <text x="625" y="190" class="txt">Check: enabled + nested group</text>
+
+  <rect x="870" y="130" width="270" height="110" class="box"/>
+  <text x="895" y="165" class="step">4) Ziti Controller</text>
+  <text x="895" y="190" class="txt">create/re-enroll OTT → *.jwt</text>
+
+  <rect x="330" y="290" width="360" height="140" class="box"/>
+  <text x="355" y="325" class="step">5) Email (SMTP)</text>
+  <text x="355" y="350" class="txt">Email to username@domain</text>
+  <text x="355" y="375" class="txt">Attachments: username.jwt + installers</text>
+  <text x="355" y="400" class="note">CLIENT_DIR (optional)</text>
+
+  <rect x="720" y="290" width="420" height="140" class="box"/>
+  <text x="745" y="325" class="step">6) Telegram reply</text>
+  <text x="745" y="350" class="txt">Status only: “Sent JWT to …”</text>
+  <text x="745" y="375" class="note">Important: files are NOT sent via Telegram</text>
+  <text x="745" y="400" class="note">Ban state is stored in BOT_STATE_FILE</text>
+
+  <path class="arrow" d="M 300 185 L 330 185"/>
+  <path class="arrow" d="M 570 185 L 600 185"/>
+  <path class="arrow" d="M 840 185 L 870 185"/>
+  <path class="arrow" d="M 1000 240 C 960 280, 820 300, 690 350"/>
+  <path class="arrow" d="M 510 240 C 540 260, 640 270, 760 305"/>
+</svg>

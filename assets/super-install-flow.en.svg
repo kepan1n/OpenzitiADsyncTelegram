@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620">
+  <defs>
+    <style>
+      .title{font:700 28px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#0f172a}
+      .box{fill:#ffffff; stroke:#94a3b8; stroke-width:2; rx:16; ry:16}
+      .step{font:700 16px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#0f172a}
+      .txt{font:500 13px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#334155}
+      .note{font:500 12px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#475569}
+      .arrow{stroke:#0f172a; stroke-width:2.5; fill:none; marker-end:url(#m)}
+    </style>
+    <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="620" fill="#f8fafc"/>
+  <text x="60" y="70" class="title">super-install.sh flow</text>
+
+  <rect x="60" y="120" width="260" height="100" class="box"/>
+  <text x="85" y="155" class="step">1) Require root</text>
+  <text x="85" y="178" class="txt">Run via sudo</text>
+
+  <rect x="350" y="120" width="300" height="100" class="box"/>
+  <text x="375" y="155" class="step">2) Bootstrap host</text>
+  <text x="375" y="178" class="txt">Install git + Docker (if missing)</text>
+
+  <rect x="680" y="120" width="460" height="100" class="box"/>
+  <text x="705" y="155" class="step">3) AppArmor auto-fix (if needed)</text>
+  <text x="705" y="178" class="txt">Detect NUL bytes in /etc/apparmor.d/tunables/home.d/*</text>
+  <text x="705" y="200" class="note">Reinstall AppArmor, remove 0x00, restart apparmor+docker</text>
+
+  <rect x="60" y="260" width="340" height="110" class="box"/>
+  <text x="85" y="295" class="step">4) Clone / update repo</text>
+  <text x="85" y="318" class="txt">Default: /opt/openziti-ad-telegram</text>
+  <text x="85" y="340" class="note">git clone or git pull</text>
+
+  <rect x="430" y="260" width="340" height="110" class="box"/>
+  <text x="455" y="295" class="step">5) Choose image mode</text>
+  <text x="455" y="318" class="txt">Pinned digests or Latest tags</text>
+  <text x="455" y="340" class="note">Copies selected file → docker-compose.yml</text>
+
+  <rect x="800" y="260" width="340" height="110" class="box"/>
+  <text x="825" y="295" class="step">6) Write configs</text>
+  <text x="825" y="318" class="txt">.env + bot/.env (from examples)</text>
+  <text x="825" y="340" class="note">Prompts: Ziti, network, LDAP (+ SMTP/Telegram in advanced)</text>
+
+  <rect x="60" y="410" width="520" height="120" class="box"/>
+  <text x="85" y="445" class="step">7) Optional start</text>
+  <text x="85" y="468" class="txt">scripts/stable-up.sh (controller → init → router)</text>
+  <text x="85" y="492" class="note">If certs exist: scripts/auto-update-certs.sh</text>
+
+  <rect x="610" y="410" width="530" height="120" class="box"/>
+  <text x="635" y="445" class="step">8) Done</text>
+  <text x="635" y="468" class="txt">You should see running containers</text>
+  <text x="635" y="492" class="note">Next: docker compose ps / logs</text>
+
+  <path class="arrow" d="M 320 170 L 350 170"/>
+  <path class="arrow" d="M 650 170 L 680 170"/>
+  <path class="arrow" d="M 280 220 C 260 240, 220 250, 200 260"/>
+  <path class="arrow" d="M 400 315 L 430 315"/>
+  <path class="arrow" d="M 770 315 L 800 315"/>
+  <path class="arrow" d="M 580 465 L 610 465"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <rect width="1200" height="700" fill="#0b1020"/>
+  <rect x="40" y="40" width="1120" height="620" rx="14" fill="#11182d" stroke="#2a355c"/>
+  <text x="70" y="95" fill="#9ad1ff" font-family="monospace" font-size="28">OpenZiti Super Installer (whiptail wizard)</text>
+  <text x="70" y="140" fill="#c6d0f5" font-family="monospace" font-size="22">[ Setup ]</text>
+  <text x="90" y="190" fill="#e6edf3" font-family="monospace" font-size="20">Controller FQDN: ziti.example.com</text>
+  <text x="90" y="225" fill="#e6edf3" font-family="monospace" font-size="20">Router FQDN:     router.example.com</text>
+  <text x="90" y="260" fill="#e6edf3" font-family="monospace" font-size="20">Public IP:       203.0.113.10</text>
+  <text x="90" y="295" fill="#e6edf3" font-family="monospace" font-size="20">LDAP server:     ldaps://ad.example.local:636</text>
+  <text x="90" y="330" fill="#e6edf3" font-family="monospace" font-size="20">LDAP base DN:    DC=example,DC=local</text>
+  <text x="90" y="365" fill="#e6edf3" font-family="monospace" font-size="20">LDAP group DN:   CN=VPN Users,OU=Groups,...</text>
+
+  <rect x="70" y="430" width="1060" height="120" rx="8" fill="#0d152b" stroke="#2a355c"/>
+  <text x="90" y="468" fill="#8bd5a0" font-family="monospace" font-size="19">Summary:</text>
+  <text x="90" y="500" fill="#c6d0f5" font-family="monospace" font-size="18">- Writes .env / bot/.env</text>
+  <text x="90" y="528" fill="#c6d0f5" font-family="monospace" font-size="18">- Starts stack with stable-up.sh</text>
+
+  <rect x="860" y="585" width="130" height="44" rx="8" fill="#2f9e44"/>
+  <text x="900" y="614" fill="#ffffff" font-family="monospace" font-size="22">OK</text>
+  <rect x="1010" y="585" width="130" height="44" rx="8" fill="#364152"/>
+  <text x="1038" y="614" fill="#ffffff" font-family="monospace" font-size="22">Cancel</text>
+</svg>
