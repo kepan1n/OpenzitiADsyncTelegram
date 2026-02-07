@@ -10,6 +10,8 @@
 
 Шаблон инфраструктурного проекта для развёртывания **OpenZiti** (Docker Compose), синхронизации пользователей из **AD/LDAP** и выдачи **enrollment JWT** по запросу через **Telegram**.
 
+**Keywords:** OpenZiti, Zero Trust, Ziti Desktop Edge, VPN, Docker Compose, Active Directory, LDAP, Telegram bot, SMTP, enrollment JWT
+
 Ключевая особенность:
 
 - Telegram используется **как интерфейс запроса**.

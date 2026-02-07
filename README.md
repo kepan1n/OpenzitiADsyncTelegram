@@ -10,6 +10,8 @@
 
 Infrastructure template to deploy **OpenZiti** (Docker Compose), sync users from **AD/LDAP**, and issue **enrollment JWT** on demand via **Telegram**.
 
+**Keywords:** OpenZiti, Zero Trust, Ziti Desktop Edge, VPN, Docker Compose, Active Directory, LDAP, Telegram bot, SMTP, enrollment JWT
+
 Key idea:
 
 - Telegram is used **only as a request UI**.
