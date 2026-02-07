@@ -3,6 +3,7 @@
 [![English](https://img.shields.io/badge/README-English-blue)](README.md)
 [![Русский](https://img.shields.io/badge/README-Русский-brightgreen)](README_RU.md)
 
+[![Vibecoded with Codex 5.3](https://img.shields.io/badge/Vibecoded%20with-Codex%205.3-7c3aed)](https://openai.com)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/kepan1n/OpenzitiADsyncTelegram?style=flat)](https://github.com/kepan1n/OpenzitiADsyncTelegram/stargazers)
 [![Issues](https://img.shields.io/github/issues/kepan1n/OpenzitiADsyncTelegram)](https://github.com/kepan1n/OpenzitiADsyncTelegram/issues)
