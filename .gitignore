@@ -1,0 +1,45 @@
+# Secrets
+.env
+bot/.env
+*.pem
+*.key
+*.pfx
+*.p12
+*.cer
+*.crt
+*.csr
+
+# Runtime data
+data/
+logs/
+
+# demo renders
+assets/renders/
+
+# local dev
+node_modules/
+package-lock.json
+package.json
+assets/super-install-demo.ttyrec
+
+# Bot venv/cache
+bot/venv/
+__pycache__/
+*.pyc
+
+# Backups and local artifacts
+*.tar.gz
+*.bak
+*.log
+tmp/
+temp/
+
+# Binaries/distributables
+clients/
+certs/
+
+# OS/editor
+.DS_Store
+*.swp
+*.swo
+*~

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660">
+  <defs>
+    <style>
+      .title{font:700 30px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#0f172a}
+      .sub{font:500 16px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#334155}
+      .box{fill:#ffffff; stroke:#94a3b8; stroke-width:2; rx:18; ry:18}
+      .box2{fill:#f8fafc; stroke:#cbd5e1; stroke-width:2; rx:18; ry:18}
+      .label{font:700 18px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#0f172a}
+      .text{font:500 14px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#0f172a}
+      .muted{font:500 13px ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; fill:#475569}
+      .arrow{stroke:#0f172a; stroke-width:2.5; fill:none; marker-end:url(#m)}
+      .arrow2{stroke:#64748b; stroke-width:2.2; fill:none; marker-end:url(#m2); stroke-dasharray:7 6}
+    </style>
+    <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a"/>
+    </marker>
+    <marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="660" fill="#f1f5f9"/>
+  <text x="60" y="70" class="title">OpenZiti + AD Sync + Telegram (Email) JWT Bot</text>
+  <text x="60" y="102" class="sub">JWT and client files are delivered via email (SMTP). Telegram is status-only.</text>
+
+  <!-- Client side -->
+  <rect x="60" y="150" width="320" height="190" class="box"/>
+  <text x="90" y="190" class="label">User</text>
+  <text x="90" y="220" class="text">Telegram chat → bot</text>
+  <text x="90" y="246" class="text">Receives: “Sent to email”</text>
+  <text x="90" y="272" class="text">Email: JWT + installers (opt.)</text>
+
+  <rect x="60" y="360" width="320" height="230" class="box2"/>
+  <text x="90" y="400" class="label">Ziti Desktop Edge</text>
+  <text x="90" y="430" class="text">Import JWT → enrollment</text>
+  <text x="90" y="456" class="text">Connect to VPN service</text>
+  <text x="90" y="482" class="muted">(ports/networks are defined by policies)</text>
+
+  <!-- Server side stack -->
+  <rect x="460" y="150" width="680" height="440" class="box"/>
+  <text x="490" y="190" class="label">Server /opt/openziti-ad-telegram</text>
+
+  <rect x="500" y="220" width="290" height="170" class="box2"/>
+  <text x="525" y="255" class="label">Telegram Bot</text>
+  <text x="525" y="282" class="text">Allowed chat_id + anti-abuse</text>
+  <text x="525" y="308" class="text">AD/LDAP: enabled + nested group</text>
+  <text x="525" y="334" class="text">JWT via ziti-controller</text>
+  <text x="525" y="360" class="muted">state.json (ban state)</text>
+
+  <rect x="820" y="220" width="290" height="170" class="box2"/>
+  <text x="845" y="255" class="label">SMTP / Mail</text>
+  <text x="845" y="282" class="text">Send email</text>
+  <text x="845" y="308" class="text">Attachments: *.jwt + files</text>
+  <text x="845" y="334" class="muted">(CLIENT_DIR)</text>
+
+  <rect x="500" y="410" width="290" height="150" class="box2"/>
+  <text x="525" y="445" class="label">OpenZiti Controller</text>
+  <text x="525" y="472" class="text">Identity / Enrollment OTT</text>
+  <text x="525" y="498" class="text">Policies / Services</text>
+
+  <rect x="820" y="410" width="290" height="150" class="box2"/>
+  <text x="845" y="445" class="label">Edge Router + ZAC</text>
+  <text x="845" y="472" class="text">Router: 3022/tcp</text>
+  <text x="845" y="498" class="text">ZAC: 8443/tcp</text>
+
+  <!-- External AD -->
+  <rect x="460" y="610" width="680" height="35" fill="none"/>
+  <text x="490" y="635" class="muted">External: AD/LDAP (LDAP_SERVER), DNS for controller/router, public IP/NAT override</text>
+
+  <!-- Arrows -->
+  <path class="arrow" d="M 380 230 C 410 230, 430 230, 500 265"/>
+  <path class="arrow" d="M 790 305 C 810 305, 820 305, 820 305"/>
+  <path class="arrow" d="M 645 390 C 645 402, 645 408, 645 410"/>
+  <path class="arrow" d="M 700 485 C 760 485, 785 485, 820 485"/>
+
+  <path class="arrow2" d="M 220 465 C 320 465, 420 465, 500 485"/>
+
+  <!-- Footer -->
+  <text x="60" y="635" class="muted">Diagram: high-level architecture. Email delivery is the key feature.</text>
+</svg>

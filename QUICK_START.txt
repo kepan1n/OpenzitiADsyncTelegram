@@ -1,0 +1,31 @@
+OpenZiti + AD + Telegram Bot (Quick Start)
+
+NOTE:
+- Telegram-бот НЕ отправляет JWT/файлы в чат.
+- Он отправляет их на почту (SMTP) как вложения, а в Telegram пишет только статус.
+
+1) Clone
+   git clone <your-repo-url> /opt/openziti-ad-telegram
+   cd /opt/openziti-ad-telegram
+
+2) Config
+   cp .env.example .env
+   cp bot/.env.example bot/.env
+   nano .env
+   nano bot/.env
+
+3) Add certificates
+   mkdir -p certs
+   # put: fullchain.cer cert.key chain.cer
+
+4) Install
+   sudo ./install.sh
+
+5) Start
+   cd /opt/openziti-ad-telegram
+   sudo ./startup.sh
+
+6) Verify
+   docker compose ps
+   systemctl status ziti-telegram-bot.service
+   systemctl status ziti-ldap-sync.timer

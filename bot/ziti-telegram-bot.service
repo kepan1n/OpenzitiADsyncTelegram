@@ -1,0 +1,19 @@
+[Unit]
+Description=OpenZiti Telegram JWT Bot
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/root/ziti-docker
+EnvironmentFile=/root/ziti-docker/bot/.env
+ExecStart=/root/ziti-docker/bot/venv/bin/python /root/ziti-docker/bot/telegram_jwt_bot.py
+Restart=on-failure
+RestartSec=5
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+

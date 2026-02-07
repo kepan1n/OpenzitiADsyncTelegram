@@ -1,0 +1,14 @@
+# Example overrides for Docker Compose.
+# Copy to docker-compose.override.yml and adjust as needed.
+# Docker Compose automatically loads docker-compose.override.yml.
+
+services:
+  # Disable ZAC by not enabling its profile (default compose uses profile "zac").
+  # To start ZAC: docker compose --profile zac up -d
+  # To start without ZAC: docker compose up -d
+  #
+  # You can also override ports, volumes, environment, etc.
+
+  ziti-console:
+    ports:
+      - ${ZITI_INTERFACE}:8443:8443
