@@ -94,6 +94,39 @@ fi
 log "Applying certificates to /persistent/pki/custom via cert-setup.sh (as root)"
 docker compose exec -T -u root ziti-controller bash /scripts/cert-setup.sh >/dev/null
 
+# Sync certificates into the controller paths that are actually referenced
+# by /persistent/ziti-controller.yaml. Without this, controller may keep using
+# the old cert/key even though /persistent/pki/custom was updated successfully.
+log "Syncing certificates into active controller PKI paths"
+docker compose exec -u 0 ziti-controller sh -lc '
+  set -e
+
+  # Main controller identity paths
+  CTRL_CERT_DIR="/persistent/pki/ziti.legenda-group.ru-intermediate/certs"
+  CTRL_KEY_DIR="/persistent/pki/ziti.legenda-group.ru-intermediate/keys"
+  CTRL_CERT="$CTRL_CERT_DIR/ziti.legenda-group.ru-server.chain.pem"
+  CTRL_KEY="$CTRL_KEY_DIR/ziti.legenda-group.ru-server.key"
+
+  # Edge API / web identity paths
+  EDGE_CERT_DIR="/persistent/pki/ziti-edge-controller-intermediate/certs"
+  EDGE_KEY_DIR="/persistent/pki/ziti-edge-controller-intermediate/keys"
+  EDGE_CERT="$EDGE_CERT_DIR/ziti.legenda-group.ru-server.chain.pem"
+  EDGE_KEY="$EDGE_KEY_DIR/ziti.legenda-group.ru-server.key"
+
+  mkdir -p "$CTRL_CERT_DIR" "$CTRL_KEY_DIR" "$EDGE_CERT_DIR" "$EDGE_KEY_DIR"
+
+  # Copy the active server certificate and private key into all referenced paths
+  cp /persistent/pki/custom/certs/server-cert.pem "$CTRL_CERT"
+  cp /persistent/pki/custom/keys/server-key.pem "$CTRL_KEY"
+  cp /persistent/pki/custom/certs/server-cert.pem "$EDGE_CERT"
+  cp /persistent/pki/custom/keys/server-key.pem "$EDGE_KEY"
+
+  chmod 644 "$CTRL_CERT" "$EDGE_CERT"
+  chmod 600 "$CTRL_KEY" "$EDGE_KEY"
+
+  echo "Synced controller certs:"
+  ls -l "$CTRL_CERT" "$CTRL_KEY" "$EDGE_CERT" "$EDGE_KEY"
+'
 log "Restarting controller"
 docker compose restart ziti-controller >/dev/null
 
